@@ -28,7 +28,7 @@ set_global_assignment -name DEVICE EP3C5F256C7
 set_global_assignment -name TOP_LEVEL_ENTITY design_top
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION 6.0
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "13:34:29  AUGUST 31, 2006"
-set_global_assignment -name LAST_QUARTUS_VERSION 8.0
+set_global_assignment -name LAST_QUARTUS_VERSION 11.0
 set_global_assignment -name EDA_SIMULATION_TOOL "ModelSim (VHDL)"
 set_global_assignment -name EDA_INCLUDE_VHDL_CONFIGURATION_DECLARATION ON -section_id eda_simulation
 set_global_assignment -name EDA_OUTPUT_DATA_FORMAT VHDL -section_id eda_simulation
@@ -49,21 +49,12 @@ set_instance_assignment -name CURRENT_STRENGTH_NEW "MINIMUM CURRENT" -to fl_rp_n
 set_instance_assignment -name CURRENT_STRENGTH_NEW "MINIMUM CURRENT" -to fl_we_n
 set_instance_assignment -name CURRENT_STRENGTH_NEW 2MA -to led_green
 set_instance_assignment -name CURRENT_STRENGTH_NEW 2MA -to led_red
-set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to scn_seg
-set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to seg_out
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to scn_seg
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to seg_out
 set_instance_assignment -name CURRENT_STRENGTH_NEW "MINIMUM CURRENT" -to usb_rd_n
 set_instance_assignment -name CURRENT_STRENGTH_NEW "MINIMUM CURRENT" -to usb_wr
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to hdr[3]
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to hdr[5]
-set_global_assignment -name VHDL_FILE ../src/postcode_ser/fifo.vhd
-set_global_assignment -name VHDL_FILE ../src/postcode_ser/pc_serializer.vhd
-set_global_assignment -name VHDL_FILE ../src/usb/usb2mem.vhd
-set_global_assignment -name VHDL_FILE ../src/lpc_proto/lpc_byte.vhd
-set_global_assignment -name VHDL_FILE ../src/flash/flsh_if.vhd
-set_global_assignment -name VHDL_FILE ../src/led_sys/led_coder.vhd
-set_global_assignment -name VHDL_FILE ../src/led_sys/byte_scan_mux.vhd
-set_global_assignment -name VHDL_FILE ../src/led_sys/led_sys.vhd
-set_global_assignment -name VHDL_FILE ../src/design_top/design_top_thincandbg.vhd
 set_global_assignment -name ENABLE_ADVANCED_IO_TIMING ON
 set_global_assignment -name NOMINAL_CORE_SUPPLY_VOLTAGE 1.2V
 set_global_assignment -name DEVICE_FILTER_SPEED_GRADE 7
@@ -150,23 +141,23 @@ set_location_assignment PIN_C2 -to usb_txe_n
 set_location_assignment PIN_D4 -to usb_wr
 set_location_assignment PIN_E15 -to lclk
 set_location_assignment PIN_E1 -to sys_clk
-set_location_assignment PIN_B7 -to led_red
-set_location_assignment PIN_A7 -to led_green
-set_location_assignment PIN_B4 -to scn_seg[0]
-set_location_assignment PIN_A4 -to scn_seg[1]
-set_location_assignment PIN_A8 -to scn_seg[2]
-set_location_assignment PIN_B5 -to scn_seg[3]
+set_location_assignment PIN_A7 -to led_red
+set_location_assignment PIN_B7 -to led_green
+set_location_assignment PIN_A4 -to scn_seg[0]
+set_location_assignment PIN_B5 -to scn_seg[1]
+set_location_assignment PIN_C8 -to scn_seg[2]
+set_location_assignment PIN_D6 -to scn_seg[3]
 set_location_assignment PIN_A2 -to seg_out[0]
 set_location_assignment PIN_C3 -to seg_out[1]
 set_location_assignment PIN_B3 -to seg_out[2]
 set_location_assignment PIN_A3 -to seg_out[3]
-set_location_assignment PIN_A5 -to seg_out[4]
-set_location_assignment PIN_C6 -to seg_out[5]
+set_location_assignment PIN_E8 -to seg_out[4]
+set_location_assignment PIN_A6 -to seg_out[5]
 set_location_assignment PIN_B6 -to seg_out[6]
-set_location_assignment PIN_A6 -to seg_out[7]
+set_location_assignment PIN_E7 -to seg_out[7]
 set_location_assignment PIN_D5 -to mode[0]
 set_location_assignment PIN_E6 -to mode[1]
-set_location_assignment PIN_D6 -to mode[2]
+set_location_assignment PIN_F6 -to mode[2]
 set_location_assignment PIN_D3 -to buf_oe_n
 set_location_assignment PIN_C15 -to lad[0]
 set_location_assignment PIN_G11 -to lad[1]
@@ -174,10 +165,10 @@ set_location_assignment PIN_C16 -to lad[2]
 set_location_assignment PIN_D16 -to lad[3]
 set_location_assignment PIN_D15 -to lreset_n
 set_location_assignment PIN_F13 -to lframe_n
-set_location_assignment PIN_K16 -to resetn
-set_location_assignment PIN_E9 -to hdr[0]
-set_location_assignment PIN_D9 -to hdr[1]
-set_location_assignment PIN_C9 -to hdr[2]
+set_location_assignment PIN_T15 -to resetn
+set_location_assignment PIN_D9 -to hdr[0]
+set_location_assignment PIN_C9 -to hdr[1]
+set_location_assignment PIN_E9 -to hdr[2]
 set_location_assignment PIN_B9 -to hdr[3]
 set_location_assignment PIN_A9 -to hdr[4]
 set_location_assignment PIN_A10 -to hdr[5]
@@ -200,27 +191,57 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to scn_seg[3]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to seg_out
 set_location_assignment PIN_B16 -to ldev_present
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to hdr[1]
-set_location_assignment PIN_K11 -to hdr_b[0]
-set_location_assignment PIN_J11 -to hdr_b[1]
-set_location_assignment PIN_K12 -to hdr_b[2]
-set_location_assignment PIN_J12 -to hdr_b[3]
-set_location_assignment PIN_M12 -to hdr_b[4]
-set_location_assignment PIN_L13 -to hdr_b[5]
-set_location_assignment PIN_N14 -to hdr_b[6]
-set_location_assignment PIN_L12 -to hdr_b[7]
-set_location_assignment PIN_P15 -to hdr_b[8]
-set_location_assignment PIN_N13 -to hdr_b[9]
-set_location_assignment PIN_P16 -to hdr_b[10]
-set_location_assignment PIN_N15 -to hdr_b[11]
-set_location_assignment PIN_L14 -to hdr_b[12]
-set_location_assignment PIN_R16 -to hdr_b[13]
-set_location_assignment PIN_L16 -to hdr_b[14]
-set_location_assignment PIN_N16 -to hdr_b[15]
+set_location_assignment PIN_J11 -to hdr_b[0]
+set_location_assignment PIN_K11 -to hdr_b[1]
+set_location_assignment PIN_L12 -to hdr_b[2]
+set_location_assignment PIN_M12 -to hdr_b[3]
+set_location_assignment PIN_J12 -to hdr_b[4]
+set_location_assignment PIN_J14 -to hdr_b[5]
+set_location_assignment PIN_R16 -to hdr_b[6]
+set_location_assignment PIN_P16 -to hdr_b[7]
+set_location_assignment PIN_N15 -to hdr_b[8]
+set_location_assignment PIN_N16 -to hdr_b[9]
+set_location_assignment PIN_K15 -to hdr_b[10]
+set_location_assignment PIN_K16 -to hdr_b[11]
+set_location_assignment PIN_J15 -to hdr_b[12]
+set_location_assignment PIN_J16 -to hdr_b[13]
+set_location_assignment PIN_L15 -to hdr_b[14]
+set_location_assignment PIN_L16 -to hdr_b[15]
 set_location_assignment PIN_N9 -to ps_ram_en
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to buf_oe_n
-set_global_assignment -name VHDL_FILE ../src/spi_eeprom/spi_master.vhd
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ldev_present
 set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to ldev_present
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to ps_ram_en
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to fl_we_n
 set_instance_assignment -name WEAK_PULL_UP_RESISTOR ON -to fl_ce_n
+set_global_assignment -name CONFIGURATION_VCCIO_LEVEL 3.3V
+set_global_assignment -name MISC_FILE "C:/projects/Dongle_II_Board/altera_quartus_proj/dongle_syn.dpf"
+set_location_assignment PIN_B4 -to scn_seg2[0]
+set_location_assignment PIN_A5 -to scn_seg2[1]
+set_location_assignment PIN_A8 -to scn_seg2[2]
+set_location_assignment PIN_C6 -to scn_seg2[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to scn_seg2
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MAXIMUM CURRENT" -to scn_seg2
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_location_assignment PIN_G16 -to lserirq
+set_instance_assignment -name CURRENT_STRENGTH_NEW "MINIMUM CURRENT" -to lserirq
+set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
+set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
+set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
+set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
+set_global_assignment -name VHDL_FILE ../src/dongle_arch/dongle_arch.vhd
+set_global_assignment -name VHDL_FILE ../src/lpc_proto/serirq.vhd -hdl_version VHDL_2008
+set_global_assignment -name VHDL_FILE ../src/serial_usb/serial_usb_package.vhd
+set_global_assignment -name VHDL_FILE ../src/serial_usb/serial_usb.vhd
+set_global_assignment -name VHDL_FILE ../src/postcode_ser/fifo.vhd
+set_global_assignment -name VHDL_FILE ../src/postcode_ser/pc_serializer.vhd
+set_global_assignment -name VHDL_FILE ../src/usb/usb2mem.vhd
+set_global_assignment -name VHDL_FILE ../src/lpc_proto/lpc_byte.vhd
+set_global_assignment -name VHDL_FILE ../src/flash/flsh_if.vhd
+set_global_assignment -name VHDL_FILE ../src/led_sys/led_coder.vhd
+set_global_assignment -name VHDL_FILE ../src/led_sys/byte_scan_mux.vhd
+set_global_assignment -name VHDL_FILE ../src/led_sys/led_sys.vhd
+set_global_assignment -name VHDL_FILE ../src/design_top/design_top_thincandbg.vhd
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

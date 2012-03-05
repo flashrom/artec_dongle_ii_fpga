@@ -71,12 +71,13 @@ entity usb2mem is
     mem_ack   : in  std_logic;
     mem_cmd   : out std_logic;
     -- USB port
-	usb_mode_en: in   std_logic;  -- enable this block 
+	usb_mode_en : in   std_logic;  -- enable this block 
     usb_rd_n   : out  std_logic;  -- enables out data if low (next byte detected by edge / in usb chip)
     usb_wr     : out  std_logic;  -- write performed on edge \ of signal
     usb_txe_n  : in   std_logic;  -- tx fifo empty (redy for new data if low)
     usb_rxf_n  : in   std_logic;  -- rx fifo empty (data redy if low)
-    usb_bd     : inout  std_logic_vector(7 downto 0) --bus data
+    usb_bd_o   : out  std_logic_vector(7 downto 0); --bus data
+	 usb_bd     : in   std_logic_vector(7 downto 0) --bus data
     ); 
 end usb2mem;
 
@@ -101,10 +102,10 @@ architecture RTL of usb2mem is
   --shyncro to USB
   signal usb_txe_nd  :    std_logic;  -- tx fifo empty (redy for new data if low)
   signal usb_rxf_nd  :    std_logic;  -- rx fifo empty (data redy if low)
-  signal internal_cmd  :    std_logic;  -- rx fifo empty (data redy if low)
+  --signal internal_cmd  :    std_logic;  -- rx fifo empty (data redy if low)
 
   signal read_mode   : std_logic;
-  signal write_mode  : std_logic;
+  --signal write_mode  : std_logic;
   signal write_count : std_logic;
   signal first_word : std_logic;
   signal mem_busy_nd : std_logic;
@@ -113,27 +114,12 @@ architecture RTL of usb2mem is
   
 begin
 
---define internal command codes
-internal_cmd <='1' when data_reg_i(7 downto 0) = x"C5" else
-					'1' when data_reg_i(7 downto 0) = x"CD" else
-					'1' when data_reg_i(7 downto 0) = x"A0" else
-					'1' when data_reg_i(7 downto 0) = x"A1" else
-					'1' when data_reg_i(7 downto 0) = x"A2" else
-					'1' when data_reg_i(7 downto 0) = x"3F" else
-					--These are spechial attention Flash commands
-					'1' when data_reg_i(7 downto 0) = x"E8" else
-					'1' when data_reg_i(7 downto 0) = x"E9" else
-					'0';
-
-
-usb_wr <= usb_wr_d when usb_mode_en='1' else
-		  'Z';
-
+usb_wr <= usb_wr_d;
 
 -- this goes to byte buffer for that reason send LSB first and MSB second
-usb_bd <=data_reg_o(7 downto 0)when data_oe='1' and CS=TXCMD0s and usb_mode_en='1' else --LSB byte first
-			data_reg_o(15 downto 8) when data_oe='1' and CS=TXCMD1s and usb_mode_en='1' else --MSB byte second
-			(others=>'Z');
+usb_bd_o <=data_reg_o(7 downto 0)when data_oe='1' and CS=TXCMD0s and usb_mode_en='1' else --LSB byte first
+			  data_reg_o(15 downto 8) when data_oe='1' and CS=TXCMD1s and usb_mode_en='1' else
+			  (others=>'0');
 
 
 process (clk25,reset_n)  --enable the scanning while in reset (simulation will be incorrect)
@@ -146,15 +132,14 @@ begin  -- process
 	usb_rxf_nd <= '1';
 	data_oe <='0';
 	state_cnt <=(others=>'0'); --init command counter
-	mem_do <= (others=>'Z');
-	mem_addr <= (others=>'Z');
+	mem_do <= (others=>'0');
+	mem_addr <= (others=>'0');
 	addr_reg <= (others=>'0');
 	mem_val <= '0';
 	mem_wr <='0';
 	mem_cmd <='0';
 	cmd_cnt <= (others=>'0');
 	read_mode <='0';
-	write_mode <='0';
  	write_count <='0';
   	first_word <='0';
 	mem_idle <='1'; --set idle

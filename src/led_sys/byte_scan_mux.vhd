@@ -89,8 +89,8 @@ lo_seg_0_2 <= lo_seg_0; --when sel_hib_n ='1' else lo_seg_2;
 seg_out <=hi_seg_1_3  when count="01" else 
 		  lo_seg_1_3  when count="10" else 
 		  hi_seg_0_2  when count="11" else
-		  lo_seg_0_2  when count="00";
-
+		  lo_seg_0_2;
+		  
 sel_out <= not sel_p;
 
 sel_p <= "1110" when count="00" else

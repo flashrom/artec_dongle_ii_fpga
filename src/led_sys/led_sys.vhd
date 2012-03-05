@@ -107,22 +107,14 @@ signal    data_hi_seg0    : std_logic_vector(7 downto 0);
 signal    data_lo_seg0    : std_logic_vector(7 downto 0);
 
 --constant display
-signal    cons_hi_seg1    : std_logic_vector(7 downto 0);
-signal    cons_lo_seg1    : std_logic_vector(7 downto 0);
-signal    cons_hi_seg0    : std_logic_vector(7 downto 0);
-signal    cons_lo_seg0    : std_logic_vector(7 downto 0);
+--signal    cons_hi_seg1    : std_logic_vector(7 downto 0);
+--signal    cons_lo_seg1    : std_logic_vector(7 downto 0);
+--signal    cons_hi_seg0    : std_logic_vector(7 downto 0);
+--signal    cons_lo_seg0    : std_logic_vector(7 downto 0);
 
 signal	  disp_cnt		  : std_logic_vector(15 downto 0):=(others=>'0'); --this enables correct simulation
 
 begin  -- rtl
----------------------------HGFEDCBA
-cons_hi_seg1 <= msn_hib;--"01111111";  --8
-cons_lo_seg1 <= lsn_hib;--"01111101";  --6
-cons_hi_seg0 <= msn_lob;--"01011100";  -- small o
-cons_lo_seg0 <= lsn_lob;--"01011100";  -- small o
-
-
-
 
 process (clk)  --enable the scanning while in reset 
 begin  -- process
